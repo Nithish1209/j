@@ -1,0 +1,954 @@
+<html>
+ <body>
+    <pre> 
+	   1.write a java program to display "Good Morning, Good Afternoon, Good
+Evening" based on the time with the help of button event using JFrame.
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Calendar;
+public class GreetingApp {
+ public static void main(String[] args) {
+ JFrame frame = new JFrame("Time-Based Greetings");
+ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ frame.setSize(300, 150);
+ frame.setLayout(null);
+ JButton greetButton = new JButton("Greet");
+ greetButton.setBounds(100, 40, 100, 30);
+ frame.add(greetButton);
+ JLabel greetingLabel = new JLabel();
+ greetingLabel.setBounds(100, 80, 200, 30);
+ frame.add(greetingLabel);
+ greetButton.addActionListener(new ActionListener() {
+ @Override
+ public void actionPerformed(ActionEvent e) {
+ Calendar calendar = Calendar.getInstance();
+ int hour = calendar.get(Calendar.HOUR_OF_DAY);
+ String greeting;
+ if (hour >= 0 && hour < 12) {
+ greeting = "Good Morning";
+ } else if (hour >= 12 && hour < 17) {
+ greeting = "Good Afternoon";
+ } else {
+ greeting = "Good Evening";
+ }
+ greetingLabel.setText(greeting);
+ }
+ });
+ frame.setVisible(true);
+ }
+}
+2.create a jframe program to perform basic arithmetic calculations on
+given two numbers with the help of button event
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+public class SimpleCalculator {
+ public static void main(String[] args) {
+ JFrame frame = new JFrame("Simple Calculator");
+ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ frame.setSize(300, 150);
+ frame.setLayout(new java.awt.GridLayout(4, 2));
+ JTextField num1Field = new JTextField(10);
+ JTextField num2Field = new JTextField(10);
+ JTextField resultField = new JTextField(10);
+ resultField.setEditable(false);
+ frame.add(new JLabel("Number 1:"));
+ frame.add(num1Field);
+ frame.add(new JLabel("Number 2:"));
+ frame.add(num2Field);
+ frame.add(new JLabel("Result:"));
+ frame.add(resultField);
+ String[] operators = {"Add", "Subtract", "Multiply", "Divide"};
+ JButton[] operationButtons = new JButton[operators.length];
+ for (int i = 0; i < operators.length; i++) {
+ operationButtons[i] = new JButton(operators[i]);
+ frame.add(operationButtons[i]);
+ }
+ ActionListener operatorListener = new ActionListener() {
+ @Override
+ public void actionPerformed(ActionEvent e) {
+ double num1 = Double.parseDouble(num1Field.getText());
+ double num2 = Double.parseDouble(num2Field.getText());
+ double result = 0;
+ String operator = e.getActionCommand();
+ switch (operator) {
+ case "Add":
+ result = num1 + num2;
+break;
+ case "Subtract":
+ result = num1 - num2;
+ break;
+ case "Multiply":
+ result = num1 * num2;
+break;
+ case "Divide":
+ if (num2 != 0) {
+ result = num1 / num2;
+ } else {
+ JOptionPane.showMessageDialog(frame, "Cannot
+divide by zero.");
+ return;
+ }
+break;
+ }
+ resultField.setText(Double.toString(result));
+ }
+ };
+ for (JButton button : operationButtons) {
+ button.addActionListener(operatorListener);
+ }
+ frame.setVisible(true);
+ }
+}
+3.create a jframe program from which you can open another frames with the
+help of button events
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+public class MultiFrameApp {
+ private JFrame mainFrame;
+ public MultiFrameApp() {
+ mainFrame = new JFrame("Main Frame");
+ mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ mainFrame.setSize(300, 150);
+ mainFrame.setLayout(new FlowLayout());
+ JButton openFrameButton = new JButton("Open Subframe");
+ mainFrame.add(openFrameButton);
+ openFrameButton.addActionListener(new ActionListener() {
+ @Override
+ public void actionPerformed(ActionEvent e) {
+ openSubframe();
+ }
+ });
+ }
+ private void openSubframe() {
+ JFrame subFrame = new JFrame("Subframe");
+ subFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+ subFrame.setSize(250, 100);
+ subFrame.setLayout(new FlowLayout());
+ JLabel label = new JLabel("This is a subframe.");
+ subFrame.add(label);
+ subFrame.setVisible(true);
+ }
+ public void displayMainFrame() {
+ mainFrame.setVisible(true);
+ }
+ public static void main(String[] args) {
+ SwingUtilities.invokeLater(new Runnable() {
+ @Override
+ public void run() {
+ MultiFrameApp app = new MultiFrameApp();
+ app.displayMainFrame();
+ }
+ });
+ }
+}
+4.design different jframes to demonstrate different layouts like flow
+layout, border layout, grid layout and null layout
+import javax.swing.*;
+import java.awt.*;
+public class LayoutDemo {
+ public static void main(String[] args) {
+ // FlowLayout Example
+ JFrame flowLayoutFrame = new JFrame("FlowLayout Example");
+ flowLayoutFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ flowLayoutFrame.setLayout(new FlowLayout());
+ for (int i = 1; i <= 5; i++) {
+ flowLayoutFrame.add(new JButton("Button " + i));
+ }
+ flowLayoutFrame.pack();
+ flowLayoutFrame.setVisible(true);
+ // BorderLayout Example
+ JFrame borderLayoutFrame = new JFrame("BorderLayout Example");
+ borderLayoutFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ borderLayoutFrame.setLayout(new BorderLayout());
+ borderLayoutFrame.add(new JButton("North"), BorderLayout.NORTH);
+ borderLayoutFrame.add(new JButton("South"), BorderLayout.SOUTH);
+ borderLayoutFrame.add(new JButton("East"), BorderLayout.EAST);
+ borderLayoutFrame.add(new JButton("West"), BorderLayout.WEST);
+ borderLayoutFrame.add(new JButton("Center"),
+BorderLayout.CENTER);
+ borderLayoutFrame.setSize(300, 200);
+ borderLayoutFrame.setVisible(true);
+ // GridLayout Example
+ JFrame gridLayoutFrame = new JFrame("GridLayout Example");
+ gridLayoutFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ gridLayoutFrame.setLayout(new GridLayout(2, 3));
+ for (int i = 1; i <= 6; i++) {
+ gridLayoutFrame.add(new JButton("Button " + i));
+ }
+ gridLayoutFrame.setSize(300, 200);
+ gridLayoutFrame.setVisible(true);
+ // NullLayout Example
+ JFrame nullLayoutFrame = new JFrame("NullLayout Example");
+ nullLayoutFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ nullLayoutFrame.setLayout(null);
+ JButton nullLayoutButton = new JButton("Null Layout Button");
+ nullLayoutButton.setBounds(50, 50, 200, 50);
+ nullLayoutFrame.add(nullLayoutButton);
+ nullLayoutFrame.setSize(300, 200);
+ nullLayoutFrame.setVisible(true);
+ }
+}
+5.create a jframe program to work with window events
+import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+public class WindowEventsExample {
+ public static void main(String[] args) {
+ JFrame frame = new JFrame("Window Events Example");
+ frame.addWindowListener(new WindowAdapter() {
+ @Override
+ public void windowOpened(WindowEvent e) {
+ System.out.println("Window Opened");
+ }
+ @Override
+ public void windowClosing(WindowEvent e) {
+ int choice = JOptionPane.showConfirmDialog(frame, "Do you
+want to close this window?", "Confirmation", JOptionPane.YES_NO_OPTION);
+ if (choice == JOptionPane.YES_OPTION) {
+ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ } else {
+
+frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+ }
+ }
+ @Override
+ public void windowIconified(WindowEvent e) {
+ System.out.println("Window Iconified (Minimized)");
+ }
+ @Override
+ public void windowDeiconified(WindowEvent e) {
+ System.out.println("Window Deiconified (Restored from
+Minimized)");
+ }
+ @Override
+ public void windowActivated(WindowEvent e) {
+ System.out.println("Window Activated");
+ }
+ @Override
+ public void windowDeactivated(WindowEvent e) {
+ System.out.println("Window Deactivated");
+ }
+ });
+ frame.setSize(400, 300);
+ frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+ frame.setVisible(true);
+ }
+}
+6. create a JFrame to add a menu bar with which you can select different
+options from different menus and perform some action on selection of
+every menu item.
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+public class SimpleMenuDemo {
+ public static void main(String[] args) {
+ SwingUtilities.invokeLater(() -> {
+ createAndShowGUI();
+ });
+ }
+ private static void createAndShowGUI() {
+ JFrame frame = new JFrame("Simple Menu Demo");
+ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ frame.setSize(400, 300);
+ JMenuBar menuBar = new JMenuBar();
+ JMenu fileMenu = new JMenu("File");
+ JMenu editMenu = new JMenu("Edit");
+ JMenuItem openItem = new JMenuItem("Open");
+ JMenuItem saveItem = new JMenuItem("Save");
+ JMenuItem cutItem = new JMenuItem("Cut");
+ JMenuItem copyItem = new JMenuItem("Copy");
+ JMenuItem pasteItem = new JMenuItem("Paste");
+ openItem.addActionListener(new ActionListener() {
+ @Override
+ public void actionPerformed(ActionEvent e) {
+ JOptionPane.showMessageDialog(frame, "Open selected");
+ }
+ });
+ saveItem.addActionListener(new ActionListener() {
+ @Override
+ public void actionPerformed(ActionEvent e) {
+ JOptionPane.showMessageDialog(frame, "Save selected");
+ }
+ });
+ cutItem.addActionListener(new ActionListener() {
+ @Override
+ public void actionPerformed(ActionEvent e) {
+ JOptionPane.showMessageDialog(frame, "Cut selected");
+ }
+ });
+ copyItem.addActionListener(new ActionListener() {
+ @Override
+ public void actionPerformed(ActionEvent e) {
+ JOptionPane.showMessageDialog(frame, "Copy selected");
+ }
+ });
+ pasteItem.addActionListener(new ActionListener() {
+ @Override
+ public void actionPerformed(ActionEvent e) {
+ JOptionPane.showMessageDialog(frame, "Paste selected");
+ }
+ });
+ fileMenu.add(openItem);
+ fileMenu.add(saveItem);
+ editMenu.add(cutItem);
+ editMenu.add(copyItem);
+ editMenu.add(pasteItem);
+ menuBar.add(fileMenu);
+ menuBar.add(editMenu);
+ frame.setJMenuBar(menuBar);
+ frame.setVisible(true);
+ }
+}
+7. create a jframe program to open the text file using jfilechooser and
+display the selected textfile content on the jtextarea
+import java.awt.event.ActionListener;
+import java.io.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+public class TextFileViewer {
+ public static void main(String[] args) {
+ SwingUtilities.invokeLater(() -> {
+ createAndShowGUI();
+ });
+ }
+ private static void createAndShowGUI() {
+ JFrame frame = new JFrame("Text File Viewer");
+ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ frame.setSize(400, 300);
+ JTextArea textArea = new JTextArea();
+ textArea.setEditable(false);
+ JScrollPane scrollPane = new JScrollPane(textArea);
+ frame.add(scrollPane, BorderLayout.CENTER);
+ JMenuBar menuBar = new JMenuBar();
+ JMenu fileMenu = new JMenu("File");
+ JMenuItem openItem = new JMenuItem("Open");
+ openItem.addActionListener(new ActionListener() {
+ @Override
+ public void actionPerformed(ActionEvent e) {
+ JFileChooser fileChooser = new JFileChooser();
+ FileNameExtensionFilter filter = new
+FileNameExtensionFilter("Text Files", "txt");
+ fileChooser.setFileFilter(filter);
+ int returnValue = fileChooser.showOpenDialog(frame);
+ if (returnValue == JFileChooser.APPROVE_OPTION) {
+ File selectedFile = fileChooser.getSelectedFile();
+try (BufferedReader reader = new BufferedReader(new
+FileReader(selectedFile))) {
+ StringBuilder fileContent = new StringBuilder();
+String line;
+while ((line = reader.readLine()) != null) {
+ fileContent.append(line).append("\n");
+ }
+textArea.setText(fileContent.toString());
+ } catch (IOException ex) {
+ ex.printStackTrace();
+JOptionPane.showMessageDialog(frame, "Error
+opening the file", "Error", JOptionPane.ERROR_MESSAGE);
+ }
+ }
+ }
+ });
+ fileMenu.add(openItem);
+ menuBar.add(fileMenu);
+ frame.setJMenuBar(menuBar);
+ frame.setVisible(true);
+ }
+}
+8.design a registration form with the help of a jframe and save the
+details in to the text file
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+public class RegistrationForm {
+ public static void main(String[] args) {
+ SwingUtilities.invokeLater(() -> {
+ createAndShowGUI();
+ });
+ }
+ private static void createAndShowGUI() {
+ JFrame frame = new JFrame("Registration Form");
+ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ frame.setSize(400, 200);
+ JPanel panel = new JPanel();
+ panel.setLayout(new GridLayout(4, 2));
+ JLabel nameLabel = new JLabel("Name:");
+ JTextField nameField = new JTextField(20);
+ JLabel emailLabel = new JLabel("Email:");
+ JTextField emailField = new JTextField(20);
+ JLabel passwordLabel = new JLabel("Password:");
+ JPasswordField passwordField = new JPasswordField(20);
+ JButton registerButton = new JButton("Register");
+ registerButton.addActionListener(new ActionListener() {
+ @Override
+ public void actionPerformed(ActionEvent e) {
+ String name = nameField.getText();
+ String email = emailField.getText();
+ String password = new
+String(passwordField.getPassword());
+ if (name.isEmpty() || email.isEmpty() ||
+password.isEmpty()) {
+ JOptionPane.showMessageDialog(frame, "Please fill in
+all fields", "Error", JOptionPane.ERROR_MESSAGE);
+ } else {
+ saveRegistrationDetails(name, email, password);
+JOptionPane.showMessageDialog(frame, "Registration
+successful");
+ clearFields(nameField, emailField, passwordField);
+ }
+ }
+ });
+ panel.add(nameLabel);
+ panel.add(nameField);
+ panel.add(emailLabel);
+ panel.add(emailField);
+ panel.add(passwordLabel);
+ panel.add(passwordField);
+ panel.add(new JLabel());
+ panel.add(registerButton);
+ frame.add(panel);
+ frame.setVisible(true);
+ }
+ private static void saveRegistrationDetails(String name, String
+email, String password) {
+ try (BufferedWriter writer = new BufferedWriter(new
+FileWriter("registration_details.txt", true))) {
+ writer.write("Name: " + name + "\n");
+ writer.write("Email: " + email + "\n");
+ writer.write("Password: " + password + "\n\n");
+ } catch (IOException e) {
+ e.printStackTrace();
+ JOptionPane.showMessageDialog(null, "Error saving
+registration details", "Error", JOptionPane.ERROR_MESSAGE);
+ }
+ }
+ private static void clearFields(JTextField nameField, JTextField
+emailField, JPasswordField passwordField) {
+ nameField.setText("");
+ emailField.setText("");
+ passwordField.setText("");
+ }
+}
+9.practice creation of generic class with any concept in java
+Code:
+public class GenericClass<T> {
+ private T value;
+ public GenericClass(T value) {
+ this.value = value;
+ }
+ public T getValue() {
+ return value;
+ }
+ public void setValue(T value) {
+ this.value = value;
+ }
+ public static void main(String[] args) {
+ GenericClass<String> stringContainer = new GenericClass<>("Hello,
+World!");
+ System.out.println("String Container Value: " +
+stringContainer.getValue());
+ GenericClass<Integer> integerContainer = new GenericClass<>(42);
+ System.out.println("Integer Container Value: " +
+integerContainer.getValue());
+ }
+}
+10.write a java program using T type generic class
+code:
+public class Box<T> {
+ private T content;
+ public Box() {
+ // Constructor for an empty Box
+ }
+ public Box(T content) {
+ this.content = content;
+ }
+ public T getContent() {
+ return content;
+ }
+ public void setContent(T content) {
+ this.content = content;
+ }
+ public static void main(String[] args) {
+ // Create a Box to hold an Integer
+ Box<Integer> intBox = new Box<>(42);
+ System.out.println("Integer in the Box: " + intBox.getContent());
+ // Create a Box to hold a String
+ Box<String> stringBox = new Box<>("Hello, World!");
+ System.out.println("String in the Box: " +
+stringBox.getContent());
+ // Create a Box to hold a Double
+ Box<Double> doubleBox = new Box<>(3.14);
+ System.out.println("Double in the Box: " +
+doubleBox.getContent());
+ }
+}
+11.write a java program using generic class and inheritance
+Code:
+// Generic Container class
+class Container<T> {
+ private T content;
+ public Container(T content) {
+ this.content = content;
+ }
+ public T getContent() {
+ return content;
+ }
+}
+// Subclass ColoredContainer that inherits from Container
+class ColoredContainer<T, C> extends Container<T> {
+ private C color;
+ public ColoredContainer(T content, C color) {
+ super(content);
+ this.color = color;
+ }
+ public C getColor() {
+ return color;
+ }
+}
+public class GenericInheritanceExample {
+ public static void main(String[] args) {
+ // Create a Container with Integer content
+ Container<Integer> intContainer = new Container<>(42);
+ System.out.println("Integer in the Container: " +
+intContainer.getContent());
+ // Create a ColoredContainer with String content and a color
+ ColoredContainer<String, String> coloredStringContainer = new
+ColoredContainer<>("Hello, World!", "Red");
+ System.out.println("String in the ColoredContainer: " +
+coloredStringContainer.getContent());
+ System.out.println("Color of the ColoredContainer: " +
+coloredStringContainer.getColor());
+ }
+}
+12.write a program to demonstrate arraylist concept in java
+Code:
+import java.util.ArrayList;
+public class ArrayListDemo {
+ public static void main(String[] args) {
+ // Create an ArrayList to store strings
+ ArrayList<String> stringList = new ArrayList<>();
+ // Add elements to the ArrayList
+ stringList.add("Apple");
+ stringList.add("Banana");
+ stringList.add("Cherry");
+ stringList.add("Date");
+ // Access and print elements in the ArrayList
+ System.out.println("ArrayList elements:");
+ for (String fruit : stringList) {
+ System.out.println(fruit);
+ }
+ // Update an element in the ArrayList
+ stringList.set(1, "Blueberry");
+ System.out.println("\nUpdated ArrayList:");
+ for (String fruit : stringList) {
+ System.out.println(fruit);
+ }
+ // Remove an element from the ArrayList
+ stringList.remove(2);
+ System.out.println("\nArrayList after removing an element:");
+ for (String fruit : stringList) {
+ System.out.println(fruit);
+ }
+ // Check if an element exists in the ArrayList
+ String searchFruit = "Cherry";
+ boolean containsFruit = stringList.contains(searchFruit);
+ System.out.println("\nArrayList contains " + searchFruit + "? " +
+containsFruit);
+ // Find the index of an element
+ int index = stringList.indexOf("Apple");
+ System.out.println("Index of 'Apple': " + index);
+ // Clear all elements in the ArrayList
+ stringList.clear();
+ System.out.println("\nArrayList after clearing:");
+ for (String fruit : stringList) {
+ System.out.println(fruit);
+ }
+ // Check if the ArrayList is empty
+ boolean isEmpty = stringList.isEmpty();
+ System.out.println("ArrayList is empty? " + isEmpty);
+ }
+}
+13.write a java program using linkedlist concept and perform its
+operations
+import java.util.LinkedList;
+public class LinkedListDemo {
+ public static void main(String[] args) {
+ // Create a LinkedList of integers
+ LinkedList<Integer> numbers = new LinkedList<>();
+ // Add elements to the LinkedList
+ numbers.add(1);
+ numbers.add(2);
+ numbers.add(3);
+ numbers.add(4);
+ // Access and print elements in the LinkedList
+ System.out.println("LinkedList elements:");
+ for (Integer number : numbers) {
+ System.out.println(number);
+ }
+ // Add elements to the beginning and end of the LinkedList
+ numbers.addFirst(0);
+ numbers.addLast(5);
+ System.out.println("\nLinkedList after adding elements at the
+beginning and end:");
+ for (Integer number : numbers) {
+ System.out.println(number);
+ }
+ // Update an element in the LinkedList
+ numbers.set(2, 99);
+ System.out.println("\nUpdated LinkedList:");
+ for (Integer number : numbers) {
+ System.out.println(number);
+ }
+ // Remove the first and last elements from the LinkedList
+ numbers.removeFirst();
+ numbers.removeLast();
+ System.out.println("\nLinkedList after removing the first and
+last elements:");
+ for (Integer number : numbers) {
+ System.out.println(number);
+ }
+ // Check if an element exists in the LinkedList
+ int searchValue = 4;
+ boolean containsValue = numbers.contains(searchValue);
+ System.out.println("\nLinkedList contains " + searchValue + "? "
++ containsValue);
+ // Find the index of an element
+ int index = numbers.indexOf(99);
+ System.out.println("Index of 99: " + index);
+ // Clear all elements in the LinkedList
+ numbers.clear();
+ System.out.println("\nLinkedList after clearing:");
+ for (Integer number : numbers) {
+ System.out.println(number);
+ }
+ // Check if the LinkedList is empty
+ boolean isEmpty = numbers.isEmpty();
+ System.out.println("LinkedList is empty? " + isEmpty);
+ }
+}
+14.write a java program using Hashset concept
+import java.util.HashSet;
+public class HashSetDemo {
+ public static void main(String[] args) {
+ // Create a HashSet to store unique numbers
+ HashSet<Integer> numbersSet = new HashSet<>();
+ // Add elements to the HashSet
+ numbersSet.add(1);
+ numbersSet.add(2);
+ numbersSet.add(3);
+ numbersSet.add(4);
+ numbersSet.add(2); // Adding a duplicate, which will be ignored
+ // Access and print elements in the HashSet
+ System.out.println("HashSet elements:");
+ for (int number : numbersSet) {
+ System.out.println(number);
+ }
+ // Check if an element exists in the HashSet
+ int searchValue = 3;
+ boolean containsValue = numbersSet.contains(searchValue);
+ System.out.println("\nHashSet contains " + searchValue + "? " +
+containsValue);
+ // Remove an element from the HashSet
+ numbersSet.remove(2);
+ System.out.println("\nHashSet after removing an element:");
+ for (int number : numbersSet) {
+ System.out.println(number);
+ }
+ // Check if the HashSet is empty
+ boolean isEmpty = numbersSet.isEmpty();
+ System.out.println("\nHashSet is empty? " + isEmpty);
+ }
+}
+15.write a java program to perform different operations on inbuilt stack
+class
+import java.io.*;
+import java.util.*;
+class Test
+{
+ // Pushing element on the top of the stack
+ static void stack_push(Stack<Integer> stack)
+ {
+ for(int i = 0; i < 5; i++)
+ {
+ stack.push(i);
+ }
+ }
+
+ // Popping element from the top of the stack
+ static void stack_pop(Stack<Integer> stack)
+ {
+ System.out.println("Pop Operation:");
+ for(int i = 0; i < 5; i++)
+ {
+ Integer y = (Integer) stack.pop();
+ System.out.println(y);
+ }
+ }
+ // Displaying element on the top of the stack
+ static void stack_peek(Stack<Integer> stack)
+ {
+ Integer element = (Integer) stack.peek();
+ System.out.println("Element on stack top: " + element);
+ }
+
+ // Searching element in the stack
+ static void stack_search(Stack<Integer> stack, int element)
+ {
+ Integer pos = (Integer) stack.search(element);
+ if(pos == -1)
+ System.out.println("Element not found");
+ else
+ System.out.println("Element is found at position: " + pos);
+ }
+ public static void main (String[] args)
+ {
+ Stack<Integer> stack = new Stack<Integer>();
+ stack_push(stack);
+ stack_pop(stack);
+ stack_push(stack);
+ stack_peek(stack);
+ stack_search(stack, 2);
+ stack_search(stack, 6);
+ }
+}
+16. write a java program to perform different operations on inbuilt queue
+class
+import java.util.LinkedList;
+import java.util.Queue;
+public class QueueExample {
+ public static void main(String[] args) {
+ Queue<String> queue = new LinkedList<>();
+ queue.add("apple");
+ queue.add("banana");
+ queue.add("cherry");
+ System.out.println("Queue: " + queue);
+ String front = queue.remove();
+ System.out.println("Removed element: " + front);
+ System.out.println("Queue after removal: " + queue);
+ queue.add("date");
+ String peeked = queue.peek();
+ System.out.println("Peeked element: " + peeked);
+ System.out.println("Queue after peek: " + queue);
+ }
+}
+17.write a java program to perform insertion,deletion,traversing and
+searching operations on hashmap and treemap
+import java.util.*;
+public class EmployeeSalaryStoring {
+public static void main(String[] args) {
+//Below Line will create HashMap with initial size 10 and 0.5
+load factor
+Map<String, Integer>empSal = new HashMap<String, Integer>(10,
+0.5f);
+//Adding employee name and salary to map
+empSal.put("Ramesh", 10000);
+empSal.put("Suresh", 20000);
+empSal.put("Mahesh", 30000);
+empSal.put("Naresh", 1000);
+empSal.put("Nainesh", 15000);
+empSal.put("Rakesh", 10000); // Duplicate Value also allowed
+but Keys should not be duplicate
+empSal.put("Nilesh", null); //Value can be null as well
+System.out.println("Original Map: "+ empSal);// Printing full
+Map
+//Adding new employee the Map to see ordering of object
+changes
+empSal.put("Rohit", 23000);
+//Removing one key-value pair
+empSal.remove("Nilesh");
+System.out.println("Updated Map: "+empSal);// Printing full
+Map
+//Printing all Keys
+System.out.println(empSal.keySet());
+//Printing all Values
+System.out.println(empSal.values());
+}
+}
+18. Write a java program to store and retrieve user defined class objects
+(Student) from TreeSet.
+Problem Description: We have to write a program in Java such that it
+creates a
+user-defined class objects(Student) using TreeSet.
+Input:
+Example input:
+1,"NISHA","CSE".
+3,"SMITHA","IT".
+2,"ROSY","ECE".
+Example output:
+1 NISHA CSE
+2 ROSY ECE
+3 SMITHA IT
+import java.util.*;
+class Student implements Comparable<Student> {
+ private int id;
+ private String name;
+ private String department;
+ public Student(int id, String name, String department) {
+ this.id = id;
+ this.name = name;
+ this.department = department;
+ }
+ public int getId() {
+ return id;
+ }
+ public String getName() {
+ return name;
+ }
+ public String getDepartment() {
+ return department;
+ }
+ @Override
+ public int compareTo(Student other) {
+ return Integer.compare(this.id, other.id);
+ }
+ @Override
+ public String toString() {
+ return id + " " + name + " " + department;
+ }
+}
+public class TreeSetExample {
+ public static void main(String[] args) {
+ TreeSet<Student> studentSet = new TreeSet<>();
+ // Add students to the TreeSet
+ studentSet.add(new Student(1, "NISHA", "CSE"));
+ studentSet.add(new Student(3, "SMITHA", "IT"));
+ studentSet.add(new Student(2, "ROSY", "ECE"));
+ // Iterate over the TreeSet and print the students
+ for (Student student : studentSet) {
+ System.out.println(student);
+ }
+ }
+}
+19.write a java program to display example that sorts an ArrayList of
+integer type
+import java.util.*;
+public class SortArrayListExample1
+{
+public static void main(String args[])
+{
+// creating object of ArrayList class
+ArrayList<String> list = new ArrayList<String>();
+// adding elements to the ArrayList
+list.add("Volkswagen");
+list.add("Toyota");
+list.add("Porsche");
+list.add("Ferrari");
+list.add("Mercedes-Benz");
+list.add("Audi");
+list.add("Rolls-Royce");
+list.add("BMW");
+// printing the unsorted ArrayList
+System.out.println("Before Sorting: "+ list);
+// Sorting ArrayList in ascending Order
+Collections.sort(list);
+// printing the sorted ArrayList
+System.out.println("After Sorting: "+ list);
+}
+}
+20. java program to demonstrate syntax of assertion for underweight
+public class UnderweightAssertionDemo {
+ public static void main(String[] args) {
+ int personWeight = 45; // Replace this with the actual weight of
+the person
+ assert personWeight > 0 : "Weight must be a positive value";
+ assert personWeight < 50 : "Weight is underweight";
+ System.out.println("Person's weight is within the healthy
+range");
+ }
+}
+21.create a java program given an array of pairs consisting of two fields
+of type string and integer.you have to sort the array in ascending
+lexicographical order and if two strings are the same sort it based on
+their integer value
+import java.util.Arrays;
+import java.util.Comparator;
+public class PairSorter {
+ public static void main(String[] args) {
+ Pair[] pairs = {
+ new Pair("apple", 5),
+ new Pair("banana", 2),
+ new Pair("apple", 2),
+ new Pair("banana", 5)
+ };
+ Arrays.sort(pairs, new Comparator<Pair>() {
+ @Override
+ public int compare(Pair pair1, Pair pair2) {
+ int stringComparison =
+pair1.getKey().compareTo(pair2.getKey());
+ if (stringComparison != 0) {
+ return stringComparison;
+ } else {
+ return Integer.compare(pair1.getValue(),
+pair2.getValue());
+ }
+ }
+ });
+ for (Pair pair : pairs) {
+ System.out.println(pair.getKey() + ", " + pair.getValue());
+ }
+ }
+ static class Pair {
+ private String key;
+ private int value;
+ public Pair(String key, int value) {
+ this.key = key;
+ this.value = value;
+ }
+ public String getKey() {
+ return key;
+ }
+ public int getValue() {
+ return value;
+ }
+ }
+}
+22.create a java program using comparator interface we have a requirement
+to sort arrayList objects in accordance with more than one field like
+firstly sort
+according to the student name and secondly sort according to student age
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+class Student {
+ private String name;
+ private int age;
+ public Student(String name, int age) {
+ this.name = name;
+ this.age = age;
+ }
+ public String getName() {
+ return name;
+ }
+ public int getAge() {
+ return age;
+ }
+}
+public class StudentSorting {
+ public static void main(String[] args) {
+ ArrayList<Student> students = new ArrayList<>();
+ students.add(new Student("Alice", 20));
+ students.add(new Student("Bob", 22));
+ students.add(new Student("Alice", 19));
+ students.add(new Student("Bob", 25));
+ // Create a custom comparator
+ Comparator<Student> comparator = Comparator
+ .comparing(Student::getName)
+ .thenComparingInt(Student::getAge);
+ // Sort the ArrayList using the custom comparator
+ Collections.sort(students, comparator);
+ // Display the sorted list
+ for (Student student : students) {
+ System.out.println("Name: " + student.getName() + ", Age: " +
+student.getAge());
+ }
+ }
+}
+</pre>
+</body>
+</html>
